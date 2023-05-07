@@ -27,12 +27,13 @@ router.get('/', user_jwt, async (req, res, next) =>{
 });
 
 router.post('/register',async (req , res, next) =>{
-    const {username, email, password} =req.body;
+    const {username, email, password, StudentId, CollegeId, Batch,Sem,Branch} =req.body;
 
     try{
         let user_exist = await User.findOne({ email: email});
-        if(user_exist){
-            res.json({
+        let sid_exist = await User.findOne({ StudentId: StudentId});
+        if(user_exist || sid_exist){
+            return res.json({
                 success: false,
                 msg: 'User already exists'
             });
@@ -40,6 +41,11 @@ router.post('/register',async (req , res, next) =>{
         let user= new User();
         user.username = username;
         user.email = email;
+        user.StudentId = StudentId;
+        user.CollegeId = CollegeId;
+        user.Batch= Batch;
+        user.Sem= Sem;
+        user.Branch = Branch;
 
         const salt = await bcryptjs.genSalt(10);
         user.password = await bcryptjs.hash(password, salt);
@@ -91,7 +97,7 @@ router.post('/login',async (req, res, next) =>{
             email: email
         });
         if(!user) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 msg: 'User not exist go and register to continue.'
             });

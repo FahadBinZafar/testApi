@@ -45,6 +45,7 @@ app.get('/',(req, res) =>{
 
 
 app.use('/api/todo/auth', require('../routes/user'));
+app.use('/api/todo/auth/user',require('../routes/quiz'));
 
 const PORT =process.env.PORT || 3000;
 app.listen(PORT,

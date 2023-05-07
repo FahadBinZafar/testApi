@@ -12,9 +12,31 @@ const userSchema = new mongoose.Schema({
     },
     email : {
         type : String,
-        required : true
+        required : true,
+        unique: true
     },
     password : {
+        type : String,
+        required : true
+    },
+     StudentId : {
+        type : Number,
+        required : true,
+        unique: true
+    },
+    CollegeId : {
+        type : Number,
+        required : true
+    },
+    Batch : {
+        type : Number,
+        required : true
+    },
+    Sem: {
+        type : Number,
+        required : true
+    },
+    Branch : {
         type : String,
         required : true
     }
